@@ -42,12 +42,12 @@ Vendors & Customers Alerts:
 
 # 🛠️ Useful Commands for Setup and Management
 Here are some essential commands to get your AI-Powered Inventory Management System up and running smoothly:
-1. Install all required dependencies: pip install -r requirements.txt  
-2. Create migrations for your database changes: python manage.py makemigrations  
-3. Apply the migrations to your database: python manage.py migrate  
-4.  Create a superuser for admin access: python manage.py createsuperuser  
-5. Start the development server: python manage.py runserver  
-6. Clear all data from the database (use with caution!): python manage.py flush
+1. Install all required dependencies =====> pip install -r requirements.txt  
+2. Create migrations for your database changes =====> python manage.py makemigrations  
+3. Apply the migrations to your database =====> python manage.py migrate  
+4.  Create a superuser for admin access =====> python manage.py createsuperuser  
+5. Start the development server =====> python manage.py runserver  
+6. Clear all data from the database (use with caution!) =====> python manage.py flush
 
 # 🎯 Why Choose Our Inventory Management System?
 1. ✅ Scalable: Designed for businesses of all sizes, from small shops to large warehouses.
