@@ -28,9 +28,17 @@ Vendors & Customers Alerts:
 1. Developed using Python Django for top-notch performance.
 2. SQL database integration to ensure secure and reliable data management.
 
-# 6️⃣ User-Friendly Experience:
+# 6️ User-Friendly Experience:
 1. Simple and intuitive navigation for team members at every level.
 2. Customizable modules to meet your unique business requirements.
+
+# 7️⃣ AI-Powered Trends Dashboard:
+1. Gain real-time insights into seasonal product trends with AI-driven analytics.
+2. Stay ahead with predictive forecasting tailored to your business needs.
+
+# 8️⃣ Animated and Engaging Dashboard:
+1. Enjoy a dynamic dashboard with smooth animations for a modern feel.
+2. Intuitive design ensuring seamless user interaction and experience.
 
 # 🎯 Why Choose Our Inventory Management System?
 1. ✅ Scalable: Designed for businesses of all sizes, from small shops to large warehouses.
