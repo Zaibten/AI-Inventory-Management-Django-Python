@@ -54,4 +54,4 @@ Let us help you take control of your inventory, optimize workflows, and improve 
 #InventoryManagement #Django #Python #Automation #EmailAlerts #Efficiency #BusinessTools
 
 # 📸 Explore Screenshots of the System 🖼️✨
-Take a closer look at our sleek, user-friendly design and advanced features in action!
+🖼️ Take a closer look at our sleek, user-friendly design and advanced features in action!
