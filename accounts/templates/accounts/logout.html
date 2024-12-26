@@ -1,29 +1,163 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% load static %}
-        <link rel="shortcut icon" type="image/png" href="{% static 'images/logo/logo.png' %}">
-        <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}" type="text/css">
-        <link rel="stylesheet" type="text/css" href="https://unpkg.com/@webpixels/css@1.1.5/dist/index.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <title>IMS: Logout</title>
-    </head>
-    <body>
-       <div class="row my-4">
-            <div class="col-md-6 offset-md-3">
-                <div class="border p-3 bg-white">
-                    <h4>You have logged out</h4>
-                    <hr>
-                    <div class="alert alert-info">
-                        <h1>See you soon!</h1>
-                    </div>
-                    <a class="btn btn-outline-success" href="{% url 'user-login' %}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-                </div>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@webpixels/css@1.1.5/dist/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Zaibten Technologies: Logout</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #000000, #ffffff); /* Black and white gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        h4 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        h4:hover {
+            color: #28a745;
+            transform: translateY(-5px);
+        }
+
+        .alert-info {
+            background-color: #e6f7ff;
+            color: #0056b3;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .alert-info:hover {
+            background-color: #cce6ff;
+            color: #004085;
+        }
+
+        .btn-outline-success {
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline-success i {
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-outline-success:hover i {
+            transform: translateX(5px);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+
+        .footer a {
+            color: #0056b3;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+            transform: translateY(-3px);
+        }
+
+        /* Enhanced input fields and buttons */
+        input[type="text"], input[type="email"], input[type="password"], textarea, select {
+            border-radius: 50px;
+            padding: 10px 20px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'images/logo/logo.png' %}" alt="Logo" class="logo">
+        <h4>You have logged out</h4>
+        <hr>
+        <div class="alert alert-info">
+            <h1>See you soon!</h1>
         </div>
-    </body>
+        <a class="btn btn-outline-success" href="{% url 'user-login' %}">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+    </div>
+
+    <div class="footer">
+        <p>All rights reserved to <a href="{% url 'user-login' %}">Zaibten Technologies</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
 </html>

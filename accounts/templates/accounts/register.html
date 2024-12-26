@@ -141,7 +141,19 @@
           color: #43A047;
           text-decoration: underline;
       }
-
+      .input-container {
+      position: relative;
+      width: 100%;
+  }
+  .toggle-password {
+      position: absolute;
+      top: 38%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+  }
       @keyframes slideIn {
           from {
               opacity: 0;
@@ -204,16 +216,38 @@
         <label>Email</label>
         <span class="text-danger">{{ form.email.errors }}</span>
         {{form.email}}
-        <label>Enter Password</label>
-        <span class="text-danger">{{ form.password.errors }}</span>
-        {{form.password1}}
-        <label>Confirm Password</label>
-        <span class="text-danger">{{ form.password2.errors }}</span>
-        {{form.password2}}
+        <label for="password">Password</label>
+        <div class="input-container">
+            {{ form.password1 }}
+            <span class="toggle-password">👁️</span>
+        </div>
+        <label for="password">Confirm Password</label>
+        <div class="input-container">
+            {{ form.password2 }}
+            <span class="toggle-password">👁️</span>
+        </div>
         <button  type="submit" name="button">Register</button>
         <p class="message">Already have an account? <a href="{% url 'user-login' %}">Login</a></p>
       </form>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const togglePasswordButtons = document.querySelectorAll(".toggle-password");
+        togglePasswordButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const input = this.previousElementSibling;
+                if (input.type === "password") {
+                    input.type = "text";
+                    this.textContent = "🙈";
+                } else {
+                    input.type = "password";
+                    this.textContent = "👁️";
+                }
+            });
+        });
+    });
+  </script>
+  
 </body>
 </html>

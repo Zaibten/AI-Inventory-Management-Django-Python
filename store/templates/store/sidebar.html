@@ -137,10 +137,25 @@
 
     <!-- Sidebar Footer -->
     <div class="sidebar-footer position-absolute bottom-0 w-100 text-center py-3 bg-dark border-top border-secondary">
-        <a class="btn btn-danger btn-sm w-75" href="{% url 'user-logout' %}">
+        <a class="btn btn-danger btn-sm w-75" href="#" onclick="confirmLogout(event)">
             <i class="fa fa-sign-out me-2"></i> Logout
         </a>
     </div>
+    
+    <script type="text/javascript">
+        function confirmLogout(event) {
+            event.preventDefault(); // Prevent the default action (logout)
+    
+            // Show confirmation dialog
+            var userConfirmed = confirm("Are you sure you want to logout?");
+            
+            if (userConfirmed) {
+                // Redirect to logout URL if user confirms
+                window.location.href = "{% url 'user-logout' %}";
+            }
+        }
+    </script>
+    
 </aside>
 
 <!-- Bootstrap Bundle with Popper.js -->

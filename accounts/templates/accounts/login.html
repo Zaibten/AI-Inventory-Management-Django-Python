@@ -81,16 +81,42 @@
         }
 
         .form input {
+            margin: 0 0 20px;
+            padding: 15px;
             outline: 0;
             background: #f9f9f9;
             width: 100%;
             border: 1px solid #ddd;
-            margin: 0 0 20px;
-            padding: 15px;
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 14px;
-            transition: all 0.3s ease;
+            position: relative;
+            padding-right: 40px;
+        }
+
+        .form input:hover, .form input:focus {
+            background: #fff;
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 38%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .toggle-password:hover {
+            color: #4CAF50;
         }
 
         .form input:hover, .form input:focus {
@@ -202,13 +228,32 @@
             <label for="username">Username</label>
             <span class="text-danger">{{ form.username.errors }}</span>
             {{ form.username }}
+
             <label for="password">Password</label>
             <span class="text-danger">{{ form.password.errors }}</span>
-            {{ form.password }}
+            <div class="input-container">
+                <input type="password" id="password" name="password">
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+
             <button type="submit" name="button">Login</button>
             <p class="message">Not registered? <a href="{% url 'user-register' %}">Create an account</a></p>
         </form>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.querySelector(".toggle-password");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.textContent = "🙈";
+        } else {
+            passwordField.type = "password";
+            toggleIcon.textContent = "👁️";
+        }
+    }
+</script>
 </body>
 </html>
