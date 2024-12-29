@@ -1,66 +1,143 @@
-# 🌟 Revolutionize Your Business with Our Django-Powered Inventory Management System! 🌟
-Looking for a complete inventory solution that not only simplifies stock management but also keeps you and your stakeholders informed? Look no further! 🚀
 
-# 🛠 Key Features of Our Inventory Management System:
-# 1️⃣ Inventory Control:
-1. Real-time stock updates for precise tracking.
-2. Automated restocking alerts for low inventory levels.
-3. Detailed dashboard for monitoring stock, sales, and purchases.
+<div align="center">
+  <img src="https://res.cloudinary.com/murste/image/upload/v1698907632/stevolve_x8ioeu.png" alt="Stephen Murichu's Logo" width="100" />
+</div>
 
-# 2️⃣ Email Notification Services:
-Vendors & Customers Alerts:
-1. Automatically notify vendors when stock falls below the minimum threshold.
-2. Include details like item name, quantity needed, and delivery timeline.
-3. Customer Updates:
-4. Notify customers about their order delivery status (e.g., Shipped, In-Transit, Delivered).
-5. Provide personalized order tracking details via email.
+# Django-inventory-management
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit)
+[![Python Version](https://img.shields.io/badge/Python-3.12-green)](https://www.python.org/downloads/)
 
-# 3️⃣ Enhanced Workflow Automation:
-1. Automated reminders for restocks and pending actions.
-2. Streamlined purchase order management to save time.
-3. Inventory performance analytics for smarter business decisions.
+## Table of Contents
+- [Django-inventory-management](#django-inventory-management)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Clone the Repository](#clone-the-repository)
+    - [With Docker](#with-docker)
+    - [Without Docker](#without-docker)
+      - [On Linux](#on-linux)
+      - [On Windows](#on-windows)
+  - [Screenshots](#screenshots)
+  - [Authors](#authors)
 
-# 4️⃣ Modern and Intuitive Frontend:
-1. Built with HTML, CSS, JavaScript, Bootstrap, and jQuery for a professional look.
-2. Fully responsive UI that works seamlessly on desktops, tablets, and mobile devices.
+## Description
+This Django application offers a solution for managing business operations with an emphasis on user experience and modern web technologies. It integrates Bootstrap for front-end design and employs Ajax for dynamic sales creation. The application features models for user profiles, vendors, customers, and transactions, including billing, invoicing, and inventory management.
 
-# 5️⃣ Powerful and Secure Backend:
-1. Developed using Python Django for top-notch performance.
-2. SQL database integration to ensure secure and reliable data management.
+## Prerequisites
+- **Python installed**: Ensure Python is installed on your system. You can download it from the official [Python website](https://www.python.org/).
+- **Understand Python and Django**: Basic understanding of Python programming and familiarity with Django web framework.
 
-# 6️ User-Friendly Experience:
-1. Simple and intuitive navigation for team members at every level.
-2. Customizable modules to meet your unique business requirements.
+## Installation
 
-# 7️⃣ AI-Powered Trends Dashboard:
-1. Gain real-time insights into seasonal product trends with AI-driven analytics.
-2. Stay ahead with predictive forecasting tailored to your business needs.
+Follow these steps to install the necessary dependencies and set up the application:
 
-# 8️⃣ Animated and Engaging Dashboard:
-1. Enjoy a dynamic dashboard with smooth animations for a modern feel.
-2. Intuitive design ensuring seamless user interaction and experience.
+### Clone the Repository
 
-# 🛠️ Useful Commands for Setup and Management
-Here are some essential commands to get your AI-Powered Inventory Management System up and running smoothly:
-1. Install all required dependencies =====> pip install -r requirements.txt  
-2. Create migrations for your database changes =====> python manage.py makemigrations  
-3. Apply the migrations to your database =====> python manage.py migrate  
-4.  Create a superuser for admin access =====> python manage.py createsuperuser  
-5. Start the development server =====> python manage.py runserver  
-6. Clear all data from the database (use with caution!) =====> python manage.py flush
+```bash
+git clone https://github.com/munuhee/sales-and-inventory-management.git
+cd sales-and-inventory-management
+```
 
-# 🎯 Why Choose Our Inventory Management System?
-1. ✅ Scalable: Designed for businesses of all sizes, from small shops to large warehouses.
-2. ✅ Customizable: Tailor features to match your specific workflows.
-3. ✅ Efficient & Connected: Save time with automation while keeping vendors and customers informed.
+### With Docker
 
-# 🚀 Ready to Streamline Your Inventory and Improve Communication?
-Let us help you take control of your inventory, optimize workflows, and improve communication with vendors and customers. Contact us now!
+1. **Build the Docker Image**
 
-# 📧 Email: muzamilkhanofficials@gmail.com
-# 📞 Call: +92 3363506933
+    ```bash
+    docker build -t sales-and-inventory-management:1.0 .
+    ```
 
-#InventoryManagement #Django #Python #Automation #EmailAlerts #Efficiency #BusinessTools
+2. **Run the Docker Container**
 
-# 📸 Explore Screenshots of the System 🖼️✨
-🖼️ Take a closer look at our sleek, user-friendly design and advanced features in action!
+    ```bash
+    docker run -d -p 8000:8000 sales-and-inventory-management:1.0
+    ```
+
+### Without Docker
+
+#### On Linux
+
+1. **Set Up the Virtual Environment**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+2. **Install Dependencies**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. **Apply Migrations and Run the Server**
+
+    ```bash
+    python manage.py migrate
+    python manage.py runserver
+    ```
+
+#### On Windows
+
+1. **Set Up the Virtual Environment**
+
+    ```bash
+    python -m venv venv
+    venv\Scripts\activate
+    ```
+
+2. **Install Dependencies**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. **Apply Migrations and Run the Server**
+
+    ```bash
+    python manage.py migrate
+    python manage.py runserver
+    ```
+
+## Screenshots
+
+<details>
+  <summary>Click to view screenshots</summary>
+
+  ![screenshot_1](https://github.com/user-attachments/assets/9bb2f5f9-d456-4681-b5de-8d82a3ef97d8)
+
+  ![screenshot_2](https://github.com/user-attachments/assets/d6e14ba3-8827-41c1-9cdb-8f24add83f4d)
+
+  ![screenshot_3](https://github.com/user-attachments/assets/6be5060e-974b-4289-bcdf-b852771833f8)
+
+  ![screenshot_4](https://github.com/user-attachments/assets/5b176c44-82dd-4080-8259-0976029a496f)
+
+  ![screenshot_5](https://github.com/user-attachments/assets/c9ab8f77-bf2a-4b1e-bc66-986101d4991b)
+
+  ![screenshot_6](https://github.com/user-attachments/assets/3db3ca87-28a8-4fee-8cc7-fcc9481076f4)
+
+  ![screenshot_7](https://github.com/user-attachments/assets/1197a79f-8e11-41e1-a8a8-4ea5f0ac0391)
+
+  ![screenshot_8](https://github.com/user-attachments/assets/a340d85b-76dc-4618-b530-97cd620ef649)
+
+  ![screenshot_9](https://github.com/user-attachments/assets/751fe028-6115-424e-b69c-0fedfa9f321f)
+
+  ![screenshot_10](https://github.com/user-attachments/assets/d3905ec2-c843-468c-bdd4-799955854fd6)
+
+  ![screenshot_11](https://github.com/user-attachments/assets/99bb9f1c-4688-4049-b31e-5de1bd817304)
+
+  ![screenshot_12](https://github.com/user-attachments/assets/a0ea68c0-2969-42e4-81cd-fbf6efffd569)
+
+  ![screenshot_13](https://github.com/user-attachments/assets/9fbd7b1c-d60c-456a-957c-4a033cf76d89)
+
+  ![screenshot_14](https://github.com/user-attachments/assets/b6eabb9a-119a-418d-af56-b44d316bf6be)
+
+  ![screenshot_15](https://github.com/user-attachments/assets/ec117dfd-e0ee-46ff-9486-b5262f58b901)
+
+</details>
+
+## Authors
+
+- [Stephen Murichu](https://github.com/munuhee)
+
+                                            Happy coding! 🚀
