@@ -1,4 +1,5 @@
 {% extends 'store/base.html' %}
+{% load static %}
 {% block title %}Invoice detail{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -7,6 +8,34 @@
 <meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
 <style>
+  .invoice-receipt {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content;
+    width: 50%;
+    background-color: #ffffff;
+    font-family: 'courier';
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .logo-container {
+    text-align: center;
+    margin-bottom: -10%; /* Reduced from 20px */
+  }
+
+  .logo-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+
+  .btn-print {
+    margin-bottom: 20px;
+  }
+
   @import "compass/css3";
   .invoice-receipt {
     display: block;
@@ -19,9 +48,14 @@
   }
 </style>
 <div class="container text-center m-5">
-<a class="btn btn-success btn-sm"><i class="fa fa-print"></i> Print</a>
+  <a class="btn btn-success btn-sm btn-print" onclick="printInvoice()"><i class="fa fa-print"></i> Print</a>
 </div>
 <div class="container invoice-receipt p-5">
+   <!-- Logo -->
+   <div class="logo-container">
+    <img src="{% static 'images/logo/logo.png' %}" alt="Company Logo">
+  </div>
+  <!-- /Logo -->
   <!-- Header -->
   <table width="100%" cellpadding="0" cellspacing="0" align="center" class="fullTable" >
     <tr>
@@ -46,7 +80,7 @@
                       <table width="220" cellpadding="0" cellspacing="0" align="left" class="col">
                         <tbody>
                           <tr>
-                            <td align="left">InventoryMS</td>
+                            <td align="left">AutoInven</td>
                           </tr>
                           <tr class="hiddenMobile">
                             <td height="40"></td>
@@ -243,5 +277,60 @@
       <td height="20"></td>
     </tr>
   </table>
+
+
+  <!-- Footer -->
+<footer style="background-color: #f8f9fa; padding: 20px; border-top: 1px solid #e4e4e4; text-align: center; font-size: 12px; color: #646a6e;">
+  <div>
+    <p>
+      &copy; {{ year }} AutoInven. All rights reserved.
+      <br>
+      Visit our website: <a href="https://www.autoinven.com" target="_blank" style="color: #007bff; text-decoration: none;">www.autoinven.com</a>
+    </p>
+  </div>
+  <div>
+    <p>
+      For support, contact us at 
+      <a href="mailto:support@autoinven.com" style="color: #007bff; text-decoration: none;">support@autoinven.com</a> 
+      or call +92 3363506933.
+    </p>
+  </div>
+</footer>
+<!-- /Footer -->
+
+
+
+<script>
+  function printInvoice() {
+    const invoiceElement = document.querySelector('.invoice-receipt');
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Invoice</title>
+          <style>
+              .logo-container {
+    text-align: center;
+    margin-bottom: -10%; /* Reduced from 20px */
+  }
+
+  .logo-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+            body { font-family: 'Courier New', Courier, monospace; }
+            .invoice-receipt { width: 100%; border: 1px solid #eaeaea; padding: 20px; }
+          </style>
+        </head>
+        <body>
+          ${invoiceElement.outerHTML}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+</script>
 </div>
 {% endblock %}
