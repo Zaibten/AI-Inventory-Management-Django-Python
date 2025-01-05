@@ -34,6 +34,7 @@
         <table class="table table-bordered table-striped table-hover table-sm">
             <thead class="thead-light">
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col"><a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}">ID <i class="fa-solid fa-sort"></i></a></th>
                     <th scope="col">Name <i class="fa-solid fa-sort"></i></th>
                     <th scope="col">Category <i class="fa-solid fa-sort"></i></th>
@@ -47,6 +48,8 @@
             <tbody>
                 {% for item in items %}
                 <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.name }}</td>
                     <td>{{ item.category }}</td>
