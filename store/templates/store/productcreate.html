@@ -84,4 +84,23 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const quantityInput = document.querySelector("input[name='quantity']");
+
+        if (quantityInput) {
+            // Set max length to 4
+            quantityInput.setAttribute("maxlength", "4");
+
+            // Restrict input to numbers only and prevent non-4 digit entry
+            quantityInput.addEventListener("input", function (event) {
+                const value = event.target.value;
+                if (!/^\d*$/.test(value) || value.length > 4) {
+                    event.target.value = value.slice(0, 4);
+                }
+            });
+        }
+    });
+</script>
+
 {% endblock content %}

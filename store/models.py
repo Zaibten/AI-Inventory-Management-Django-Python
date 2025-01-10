@@ -53,6 +53,9 @@ class Item(models.Model):
         """
         String representation of the item.
         """
+        # return (
+        #     f"{self.name}"
+        # )     
         return (
             f"{self.name} - Category: {self.category}, "
             f"Quantity: {self.quantity}"

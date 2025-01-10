@@ -44,7 +44,7 @@ from .models import Category, Item, Delivery
 from .forms import ItemForm, CategoryForm, DeliveryForm
 from .tables import ItemTable
 
-# For SMTP Mail Server
+# For SMTP Mail Server for Notify users
 import os
 import smtplib
 import time
@@ -54,6 +54,7 @@ from email.mime.image import MIMEImage
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from .models import Item
+
 
 
 @login_required
@@ -88,6 +89,33 @@ def dashboard(request):
     ]
     sale_dates_values = [float(date["total_sales"]) for date in sale_dates]
 
+    # Low stock analysis
+    low_stock_threshold = 20  # Example threshold for low stock
+    low_stock_items = Item.objects.filter(quantity__lte=low_stock_threshold)
+    low_stock_items_names = [item.name for item in low_stock_items]
+    low_stock_items_counts = [item.quantity for item in low_stock_items]
+
+    # Find duplicate product names
+    duplicate_items = (
+        Item.objects.values('name')
+        .annotate(name_count=Count('name'))
+        .filter(name_count__gt=1)
+    )
+
+    # Find the duplicate product with the lowest price
+    duplicate_products = Item.objects.filter(
+        name__in=[item['name'] for item in duplicate_items]
+    ).order_by('price')  # Order by price to get the product with the lowest price
+
+    # Fetch only the first result for each duplicate product name
+    first_duplicate_products = []
+    seen_names = set()
+
+    for product in duplicate_products:
+        if product.name not in seen_names:
+            first_duplicate_products.append(product)
+            seen_names.add(product.name)
+
     context = {
         "items": items,
         "profiles": profiles,
@@ -101,9 +129,11 @@ def dashboard(request):
         "category_counts": category_counts,
         "sale_dates_labels": sale_dates_labels,
         "sale_dates_values": sale_dates_values,
+        "low_stock_items_names": low_stock_items_names,
+        "low_stock_items_counts": low_stock_items_counts,
+        "duplicate_products": first_duplicate_products,  # Add filtered duplicates to context
     }
     return render(request, "store/dashboard.html", context)
-
 
 class ProductListView(LoginRequiredMixin, ExportMixin, tables.SingleTableView):
     """

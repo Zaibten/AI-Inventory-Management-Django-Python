@@ -317,10 +317,10 @@
     <div class="ticket">
         <div class="head-ticket">
             <p class="x-bold">AutoInven</p>
-            <p class="bold">Tom Mboya Street, Tudor</p>
-            <p class="bold">Tel: +2547 00 000000</p>
+            <p class="bold">DHA Phase II, Karachi</p>
+            <p class="bold">Tel: +92 3363506933</p>
             <br>
-            <p class="bold">P.O BOX. 90420-80100 MSA</p>
+            <p class="bold">P.O BOX. 832952-108573 PSA</p>
             <p>Date: {{ sale.date_added|date:"Y/m/d H:i:s" }}</p>
             <p>Receipt code: IMS{{ sale.id }}</p>
             <div class="code-barre">
@@ -385,20 +385,21 @@
                 </div>
                 <br>
                 <div class="col2">
-                    <p>Tax Amount</p>
-                    <p class="prix"><b>Ksh {{ sale.tax_amount }}</b></p>
+                    <p>GST</p>
+					<p class="prix"><b>10 Rs</b></p>
+                    <!-- <p class="prix"><b>Ksh {{ sale.tax_amount }}</b></p> -->
                 </div>
                 <div class="col2">
-                    <p>Grand Total</p>
-                    <p class="prix"><b>Ksh {{ sale.grand_total }}</b></p>
+                    <p>Total Exclusive Tax</p>
+                    <p class="prix"><b>{{ sale.grand_total }} Rs</b></p>
                 </div>
                 <div class="col2">
                     <p>Amount Paid</p>
-                    <p class="prix"><b>Ksh {{ sale.amount_paid }}</b></p>
+                    <p class="prix"><b>{{ sale.amount_paid }} Rs</b></p>
                 </div>
                 <div class="col2">
                     <p>Balance</p>
-                    <p class="prix"><b>Ksh {{ sale.amount_change }}</b></p>
+                    <p class="prix"><b>{{ sale.amount_change }} Rs</b></p>
                 </div>
             </div>
             <div class="hr-lg"></div>
