@@ -39,7 +39,8 @@ from django_tables2.export.views import ExportMixin
 
 # Local app imports
 from accounts.models import Profile, Vendor
-from transactions.models import Sale
+from bills.views import send_email_alert
+from transactions.models import Sale, SaleDetail
 from .models import Category, Item, Delivery
 from .forms import ItemForm, CategoryForm, DeliveryForm
 from .tables import ItemTable
@@ -59,6 +60,7 @@ from .models import Item
 
 @login_required
 def dashboard(request):
+    send_email_alert()
     print("Running low-quantity check on startup...")
     notify_low_quantity_items()
     profiles = Profile.objects.all()
@@ -116,6 +118,12 @@ def dashboard(request):
             first_duplicate_products.append(product)
             seen_names.add(product.name)
 
+    pending_delivery_count = Delivery.objects.filter(is_delivered=False).count()
+    # Find less sold items (not in sales details)
+    items_not_sold = Item.objects.exclude(
+        id__in=SaleDetail.objects.values('item').distinct()
+    )
+
     context = {
         "items": items,
         "profiles": profiles,
@@ -124,6 +132,7 @@ def dashboard(request):
         "total_items": total_items,
         "vendors": Vendor.objects.all(),
         "delivery": Delivery.objects.all(),
+        "pending_delivery_count": pending_delivery_count,
         "sales": Sale.objects.all(),
         "categories": categories,
         "category_counts": category_counts,
@@ -132,6 +141,7 @@ def dashboard(request):
         "low_stock_items_names": low_stock_items_names,
         "low_stock_items_counts": low_stock_items_counts,
         "duplicate_products": first_duplicate_products,  # Add filtered duplicates to context
+        "items_not_sold": items_not_sold,  # Add less sold items to the context
     }
     return render(request, "store/dashboard.html", context)
 
