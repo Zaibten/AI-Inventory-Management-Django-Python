@@ -38,7 +38,6 @@ from django.views.generic.edit import FormMixin
 from django_tables2 import SingleTableView
 import django_tables2 as tables
 from django_tables2.export.views import ExportMixin
-from sklearn.model_selection import train_test_split
 
 # Local app imports
 from accounts.models import Customer, Profile, Vendor
@@ -58,7 +57,6 @@ from email.mime.image import MIMEImage
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from .models import Item
-from transformers import pipeline  # Example using Hugging Face's transformers library
 
 
 @login_required
