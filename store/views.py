@@ -38,7 +38,6 @@ from django.views.generic.edit import FormMixin
 from django_tables2 import SingleTableView
 import django_tables2 as tables
 from django_tables2.export.views import ExportMixin
-import numpy as np
 from sklearn.model_selection import train_test_split
 
 # Local app imports
