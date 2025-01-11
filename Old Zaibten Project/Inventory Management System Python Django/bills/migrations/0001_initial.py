@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(blank=True, help_text='Address of the institution', max_length=255, null=True)),
                 ('description', models.CharField(blank=True, help_text='Description of the bill', max_length=255, null=True)),
                 ('payment_details', models.CharField(help_text='Details of the payment', max_length=255)),
-                ('amount', models.FloatField(help_text='Total amount due for payment', verbose_name='Total Amount Owing (Ksh)')),
+                ('amount', models.FloatField(help_text='Total amount due for payment', verbose_name='Total Amount Owing  ')),
                 ('status', models.BooleanField(default=False, help_text='Payment status of the bill', verbose_name='Paid')),
             ],
         ),

@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                 ('delivery_date', models.DateTimeField(blank=True, null=True, verbose_name='Delivery Date')),
                 ('quantity', models.DecimalField(decimal_places=2, default=0.0, max_digits=10)),
                 ('delivery_status', models.CharField(choices=[('P', 'Pending'), ('S', 'Successful')], default='P', max_length=1, verbose_name='Delivery Status')),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=10, verbose_name='Price per item (Ksh)')),
+                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=10, verbose_name='Price per item ')),
                 ('total_value', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store.item')),
                 ('vendor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='purchases', to='accounts.vendor')),
