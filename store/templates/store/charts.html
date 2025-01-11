@@ -1,24 +1,36 @@
 <div class="row">
     <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
         <div class="card-body">
-            <h5 class="card-title">Category Distribution</h5>
-            <div class="chart-container">
-                <canvas id="pieChart"></canvas>
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5 class="card-title">📊 Category Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
         <div class="card-body">
-            <h5 class="card-title">Sales Over Time</h5>
-            <div class="chart-container">
-                <canvas id="lineChart"></canvas>
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5 class="card-title">🚀 Business Growth Journey</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- New Card for Low Stock Products -->
     <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
         <div class="card-body">
-            <h5 class="card-title">Low Stock Products</h5>
+            <h5 class="card-title">📉 Low Stock Products</h5>
             <div class="chart-container">
                 <canvas id="barChart"></canvas>
             </div>
@@ -29,7 +41,7 @@
         <div class="card-body">
             <div class="card shadow border-0">
                 <div class="card-header">
-                    <h5 class="mb-0">Budget Tracking</h5>
+                    <h5 class="mb-0">💰 Budget Tracking</h5>
                 </div>
                 <div class="card-body">
                     {% if duplicate_products %}
@@ -64,41 +76,227 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
-            <div class="card-body">
-                <h5 class="card-title">Less Sold Items</h5>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
-                        <thead style="background: linear-gradient(to right, #ff7e5f, #feb47b); color: white;">
-                            <tr>
-                                <th style="color: #ffffff;">Item Name <span>📝</span></th>
-                                <th style="color: #ffffff;">Category <span>📦</span></th>
-                                <th style="color: #ffffff;">Quantity <span>📊</span></th>
-                            </tr>
-                        
-                        <tbody>
-                            {% for item in items_not_sold %}
-                                <tr>
-                                    <td>{{ item.name }}</td>
-                                    <td>{{ item.category.name }}</td>
-                                    <td>{{ item.quantity }}</td>
-                                </tr>
-                            {% empty %}
-                                <tr>
-                                    <td colspan="3">No items found.</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5 class="card-title">📉 Less Sold Items</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <!-- Enable horizontal scrolling -->
+                        <div class="table-responsive" style="overflow-x: auto; white-space: nowrap;">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead style="background: linear-gradient(to right, #ff7e5f, #feb47b); color: white;">
+                                    <tr>
+                                        <th style="color: #ffffff;">Item Name <span>📝</span></th>
+                                        <th style="color: #ffffff;">Category <span>📦</span></th>
+                                        <th style="color: #ffffff;">Quantity <span>📊</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items_not_sold %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.category.name }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3">No items found.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
+        <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+            <div class="card-body">
+                <div class="card shadow border-0">
+                    <div class="card-header">
+                        <h5 class="mb-0">🧑‍💼 Customer Tracking</h5>
+                    </div>
+                    <div class="card-body">
+                            
+        <!-- Customer Loyalty Points Chart -->
+    <canvas id="loyaltyPointsChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="card animated-card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <h5 class="card-title">✨ Smart Tips</h5>
+            <div class="tips-container">
+                <ul id="tips-list">
+                    {% for tip in tips %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5 class="mb-0">🤔 What we can do?</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="tipsRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5 class="card-title">📢 Recommendations For Advertisement</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow-x: auto; white-space: nowrap;">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead style="background: linear-gradient(to right, #ca2493, #eeaed5); color: white;">
+                                <tr>
+                                    <th style="color: #ffffff;">Item Name <span>📝</span></th>
+                                    <th style="color: #ffffff;">Category <span>📦</span></th>
+                                </tr>                                
+                            </thead>
+                            <tbody>
+                                {% for item in items_in_sales %}
+                                    <tr>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.category.name }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4">No items found in sales.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <h5 class="card-title">📈 Sales Trend</h5>
+            <div class="chart-container">
+                <canvas id="salesTrendChart" width="1500" height="900"></canvas>
+            </div>
+        </div>
+    </div>
+    
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    const ctx = document.getElementById('salesTrendChart').getContext('2d');
+    const salesTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ sales_trend_labels|safe }},
+            datasets: [{
+                label: 'Sales Trend',
+                data: {{ sales_trend_values|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                tension: 0.4,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+            },
+            scales: {
+                x: { title: { display: true, text: 'Date' } },
+                y: { title: { display: true, text: 'Quantity Sold' } }
+            }
+        }
+    });
+        // Radar chart for Smart Tips
+        var tipsRadarCtx = document.getElementById('tipsRadarChart').getContext('2d');
+    var tipsRadarChart = new Chart(tipsRadarCtx, {
+        type: 'radar',
+        data: {
+            labels: {{ tips_labels|safe }},
+            datasets: [{
+                label: 'Tip Relevance',
+                data: {{ tips_importance|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    angleLines: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    pointLabels: {
+                        color: '#333',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.raw + ' / 10';
+                        }
+                    }
+                }
+            }
+        }
+    });
+     // Customer Loyalty Points Chart
+     var loyaltyPointsCtx = document.getElementById('loyaltyPointsChart').getContext('2d');
+    var loyaltyPointsChart = new Chart(loyaltyPointsCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ customer_loyalty_data.labels|safe }},
+            datasets: [{
+                label: '{{ customer_loyalty_data.title }}',
+                data: {{ customer_loyalty_data.data|safe }},
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
     // Pie Chart with Animation
     var ctxPie = document.getElementById('pieChart').getContext('2d');
     var pieChart = new Chart(ctxPie, {
@@ -152,7 +350,7 @@
         data: {
             labels: {{ sale_dates_labels|safe }},
             datasets: [{
-                label: 'Sales Over Time',
+                label: 'Growth Trend',
                 data: {{ sale_dates_values|safe }},
                 fill: false,
                 borderColor: '#4BC0C0',
@@ -174,7 +372,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Sales Over Time',
+                    text: 'Business Growth Trend',
                     font: {
                         size: 16
                     }
@@ -233,6 +431,63 @@
 </script>
 
 <style>
+.animated-card {
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tips-container {
+    height: 90%; /* Set a fixed height for the container */
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffff;
+}
+
+#tips-list {
+    position: absolute;
+    animation: slide-up 10s linear infinite;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Duplicate the tips to create an infinite loop */
+#tips-list::after {
+    content: attr(data-tips);
+    display: block;
+}
+
+#tips-list li {
+    padding: 10px 0;
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    background: rgba(74, 144, 226, 0.1);
+    margin: 5px 0;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#tips-list li:hover {
+    background: rgba(74, 144, 226, 0.2);
+    transform: scale(1.05);
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(-50%); /* Only scroll halfway to repeat */
+    }
+}
+
+
 .chart-container {
     position: relative;
     width: 100%;
