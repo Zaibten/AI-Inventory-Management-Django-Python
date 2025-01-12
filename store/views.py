@@ -11,6 +11,11 @@ and querying functionalities.
 """
 
 # Standard library imports
+import base64
+import io
+import spacy
+from transformers import pipeline
+from collections import Counter, defaultdict
 import operator
 from functools import reduce
 from statistics import LinearRegression
@@ -38,6 +43,7 @@ from django.views.generic.edit import FormMixin
 from django_tables2 import SingleTableView
 import django_tables2 as tables
 from django_tables2.export.views import ExportMixin
+from wordcloud import WordCloud
 
 # Local app imports
 from accounts.models import Customer, Profile, Vendor
@@ -57,6 +63,7 @@ from email.mime.image import MIMEImage
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from .models import Item
+
 
 
 @login_required
@@ -243,6 +250,47 @@ def dashboard(request):
         entry["sale__date_added__date"].strftime("%Y-%m-%d") for entry in sales_trend_data
     ]
     sales_trend_values = [entry["total_quantity"] for entry in sales_trend_data]
+    items_in_sales = Item.objects.filter(
+        id__in=SaleDetail.objects.values('item').distinct()
+    )
+    sale_details = SaleDetail.objects.all()
+    product_sales = defaultdict(list)
+    for sale in sale_details:
+        product_sales[sale.item.name].append(sale.quantity)
+    predicted_sales = []
+    for product_name, quantities in product_sales.items():
+        total_sales = sum(quantities)
+        predictions = [total_sales + i for i in range(2, 5)]
+        predicted_sales.append({
+            "product_name": product_name,
+            "current_sales": total_sales,
+            "future_sales": predictions,
+        })
+    nlp = spacy.load("en_core_web_sm")
+    summarizer = pipeline("summarization")
+    sale_details = SaleDetail.objects.all()
+    item_names = [sale.item.name for sale in sale_details]
+    name_analysis = []
+    for name in item_names:
+        doc = nlp(name)
+        name_analysis.append({
+            "name": name,
+            "tokens": [token.text for token in doc],
+            "pos_tags": [token.pos_ for token in doc],
+            "entities": [(ent.text, ent.label_) for ent in doc.ents],
+        })
+    long_names = [name for name in item_names if len(name) > 20]
+    summarized_names = summarizer(". ".join(long_names), max_length=50, min_length=10, do_sample=False)
+    name_embeddings = [
+        {"name": name, "embedding": [token.vector for token in nlp(name)]} for name in item_names
+    ]
+    product_names = [sale.item.name for sale in SaleDetail.objects.all()]
+    word_frequencies = Counter(product_names)
+    wordcloud = WordCloud(width=800, height=400, background_color="white").generate_from_frequencies(word_frequencies)
+    image_io = io.BytesIO()
+    wordcloud.to_image().save(image_io, format='PNG')
+    image_io.seek(0)
+    wordcloud_image_data = base64.b64encode(image_io.getvalue()).decode('utf-8')
     context = {
         "items": items,
         "profiles": profiles,
@@ -272,6 +320,12 @@ def dashboard(request):
         "sales_trend_labels":sales_trend_labels,
         "sales_trend_values": sales_trend_values,
         "tips_importance": tips_importance,
+        "items_in_sales": items_in_sales,
+        "predicted_sales": predicted_sales,  # Add predicted sales to context
+        "name_analysis": name_analysis,
+        "summarized_names": summarized_names,
+        "name_embeddings": name_embeddings,
+        "wordcloud_image_data": wordcloud_image_data,
     }
     return render(request, "store/dashboard.html", context)
 

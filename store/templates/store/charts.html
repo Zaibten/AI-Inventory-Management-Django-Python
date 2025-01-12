@@ -225,6 +225,92 @@
         </div>
     </div>
 
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5>📈 Future Sales Products</h5>
+                </div>
+                <div class="card-body">
+                    {% if duplicate_products %}
+                    <div class="table-responsive" style="overflow-x: auto; white-space: nowrap; height: 350px;">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead style="background: linear-gradient(to right, #1d5533, #53eb5f); color: white;">
+                                <tr>
+                                    <th style="color: #ffffff;">🛒 Product Name <span></span></th>
+                                    <th style="color: #ffffff;">🔮 Future Sales <span></span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for sale in predicted_sales %}
+                                <tr>
+                                    <td>{{ sale.product_name }}</td>
+                                    <td>{{ sale.future_sales|join:", " }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p>No duplicate products found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-6">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5>🔍 Item Tag Analysis</h5>
+                </div>
+                <div class="card-body">
+                    {% if duplicate_products %}
+                    <div class="table-responsive" style="overflow-x: auto; white-space: nowrap; height: 350px;">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead style="background: linear-gradient(to right, #a50808, #fca5a5); color: white;">
+                                <tr>
+                                    <th style="color: #ffffff;">🔑 Name <span></span></th>
+                                    <th style="color: #ffffff;">📝 Social Tags <span></span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for analysis in name_analysis %}
+                                <tr>
+                                    <td>{{ analysis.name }}</td>
+                                    <td>{{ analysis.pos_tags|join:", " }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p>No duplicate data found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card shadow border-0 mb-7 col-md-6 col-lg-12">
+        <div class="card-body">
+            <div class="card shadow border-0">
+                <div class="card-header">
+                    <h5>🌟 Product Wordcloud</h5>
+                </div>
+                <div class="card-body">
+                    <img src="data:image/png;base64,{{ wordcloud_image_data }}" alt="Word Cloud">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
