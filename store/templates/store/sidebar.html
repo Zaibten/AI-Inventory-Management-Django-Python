@@ -89,8 +89,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2 dropdown">
-                <a class="nav-link text-light {% if request.resolver_match.url_name == 'productslist' %}active{% endif %} dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-folder me-2"></i> Products
+                <a class="nav-link text-light {% if request.resolver_match.url_name == 'productslist' or request.resolver_match.url_name == 'category-list' %}active{% endif %} dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">                    <i class="fa fa-folder me-2"></i> Products
                 </a>
                 <ul class="dropdown-menu bg-dark border-0" aria-labelledby="productsDropdown">
                     <li><a class="dropdown-item text-light {% if request.resolver_match.url_name == 'productslist' %}active{% endif %}" href="{% url 'productslist' %}">All Products</a></li>
@@ -132,6 +131,24 @@
                     <li><a class="dropdown-item text-light {% if request.resolver_match.url_name == 'customer_list' %}active{% endif %}" href="{% url 'vendor-list' %}">Vendors</a></li>
                 </ul>
             </li>
+            <li class="nav-item mb-2 dropdown">
+                <a class="nav-link text-light {% if request.resolver_match.url_name == 'purchase-report' or request.resolver_match.url_name == 'sale-report' %}active{% endif %} dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-folder me-2"></i> Report
+                </a>
+                <ul class="dropdown-menu bg-dark border-0" aria-labelledby="productsDropdown">
+                    <li>
+                        <a class="dropdown-item text-light {% if request.resolver_match.url_name == 'sale-report' %}active{% endif %}" href="{% url 'sale-report' %}">
+                            Sales Report
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-light {% if request.resolver_match.url_name == 'purchase-report' %}active{% endif %}" href="{% url 'purchase-report' %}">
+                            Purchase
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
         </ul>
     </div>
 

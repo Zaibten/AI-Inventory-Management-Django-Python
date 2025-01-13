@@ -1,0 +1,146 @@
+{% extends "store/base.html" %}
+{% block title %}Sale Report{% endblock %}
+{% block content %}
+
+{% load static %}
+<div class="container pt-5">
+    <!-- The form itself, without header/footer -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="customer_name" class="form-label">Enter Customer First Name Here</label>
+            <input type="text" name="customer_name" id="customer_name" class="form-control" 
+            placeholder="Enter customer name" value="{{ search_query }}">
+     
+        </div>
+        <div class="col-md-3">
+            <label for="from_date" class="form-label">From Date</label>
+            <input type="date" name="from_date" id="from_date" class="form-control" 
+                   value="{{ from_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="to_date" class="form-label">To Date</label>
+            <input type="date" name="to_date" id="to_date" class="form-control" 
+                   value="{{ to_date }}">
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+
+        </div>
+    </form>
+    
+    <!-- Print Buttons in a Single Row with Reduced Gap -->
+    {% if sales %}
+    <div class="row mb-3">
+        <div class="col-md-11 pe-1 text-end">
+            <button class="btn btn-success" onclick="printReport()">Print PDF Report</button>
+            <button class="btn btn-success" onclick="exportToExcel()">Print Excel Report</button>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Sales Table -->
+    {% if sales %}
+    <div id="print-section" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+        <table class="table table-striped" id="sales-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Sub Total</th>
+                    <th>Grand Total</th>
+                    <th>Tax Amount</th>
+                    <th>Amount Paid</th>
+                    <th>Amount Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.id }}</td>
+                    <td>{{ sale.date_added }}</td>
+                    <td>{{ sale.customer }}</td>
+                    <td>{{ sale.sub_total }}</td>
+                    <td>{{ sale.grand_total }}</td>
+                    <td>{{ sale.tax_amount }}</td>
+                    <td>{{ sale.amount_paid }}</td>
+                    <td>{{ sale.amount_change }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No records found.</p>
+    {% endif %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+<script>
+    function printReport() {
+        const printContents = document.getElementById('print-section').outerHTML;
+        const originalContents = document.body.innerHTML;
+
+        // Get the current date and time
+        const currentDateTime = new Date().toLocaleString();
+
+        // Adding header, current date/time, and footer when printing the report
+        document.body.innerHTML = `
+            <!-- Header Section -->
+            <div style="text-align: center; padding-top: 30px; font-family: Arial, sans-serif;">
+                <img src="{% static 'images/logo/logo.png' %}" alt="Company Logo" 
+                     style="width: 150px; height: auto; border-radius: 50%; border: 3px solid #000;">
+                <h2 style="font-weight: bold; font-size: 28px; margin-top: 15px; color: #333;">AutoInven</h2>
+                <p style="font-size: 16px; color: #888;">Report generated on: ${currentDateTime}</p>
+            </div>
+
+            <!-- Content Section -->
+            <div style="padding: 40px; font-family: 'Helvetica Neue', sans-serif; line-height: 1.6;">
+                ${printContents}
+            </div>
+
+            <!-- Footer Section -->
+            <div style="text-align: center; margin-top: 40px; padding: 20px; background-color: #f7f7f7; border-top: 2px solid #ccc; font-family: Arial, sans-serif;">
+                <p style="font-weight: bold; font-size: 20px; margin-bottom: 10px; color: #333;">AutoInven</p>
+                <p style="font-size: 16px; color: #555;">Your Trusted Partner in Inventory Sales & Management</p>
+                <p style="font-size: 14px; color: #555;">Contact: +92 3363506933 | Address: DHA Phase II, Karachi</p>
+                <p style="font-size: 12px; color: #777;">&copy; 2025 AutoInven. All Rights Reserved.</p>
+            </div>
+        `;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+
+    function exportToExcel() {
+        const table = document.getElementById('sales-table');
+        const wb = XLSX.utils.table_to_book(table, {sheet: "Sales Report"});
+        const wbout = XLSX.write(wb, {bookType: "xlsx", type: "binary"});
+        
+        // Create a Blob and trigger download
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        }
+
+        const blob = new Blob([s2ab(wbout)], {type: "application/octet-stream"});
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "sales_report.xlsx";
+        link.click();
+    }
+
+    function clearForm() {
+        // Clear the customer name and date fields
+        document.getElementById('customer_name').value = '';
+        document.getElementById('from_date').value = '';
+        document.getElementById('to_date').value = '';
+    }
+</script>
+
+{% endblock content %}

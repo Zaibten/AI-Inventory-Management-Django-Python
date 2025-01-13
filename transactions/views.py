@@ -1,12 +1,13 @@
 # Standard library imports
 import json
 import logging
-
+from django.db.models import Q
 # Django core imports
 from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.db import transaction
+from datetime import datetime
 
 # Class-based views
 from django.views.generic import DetailView, ListView
@@ -363,3 +364,73 @@ class PurchaseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         Allow deletion only for superusers.
         """
         return self.request.user.is_superuser
+
+
+
+
+from django.db.models import Q
+
+# View for the sale report page
+def sale_report(request):
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    customer_name = request.GET.get('customer_name')
+
+    # Fetch all sales records
+    sales = Sale.objects.all()
+
+    # Filter by date range if both `from_date` and `to_date` are provided
+    if from_date and to_date:
+        sales = sales.filter(date_added__range=[from_date, to_date])
+
+    # Filter by customer name if provided
+    if customer_name:
+        # Check if customer_name contains a space (meaning first and last name)
+        name_parts = customer_name.split()
+        if len(name_parts) == 2:
+            # Search by first and last name separately
+            sales = sales.filter(
+                Q(customer__first_name__icontains=name_parts[0]) & 
+                Q(customer__last_name__icontains=name_parts[1])
+            )
+        else:
+            # Search by first or last name
+            sales = sales.filter(
+                Q(customer__first_name__icontains=customer_name) | 
+                Q(customer__last_name__icontains=customer_name)
+            )
+
+    # Pass data to the template
+    context = {
+        'sales': sales,
+        'search_query': customer_name,
+        'from_date': from_date,
+        'to_date': to_date,
+    }
+    return render(request, 'transactions/sale_report.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# View for the purchase report page
+def purchase_report(request):
+    try:
+        return render(request, 'transactions/purchase_report.html')
+    except Exception as e:
+        return HttpResponse(f"Error: {e}")
