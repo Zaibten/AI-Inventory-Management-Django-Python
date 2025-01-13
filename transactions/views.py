@@ -367,9 +367,10 @@ class PurchaseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+@login_required
 # View for the sale report page
 def sale_report(request):
     from_date = request.GET.get('from_date')
@@ -410,27 +411,30 @@ def sale_report(request):
     return render(request, 'transactions/sale_report.html', context)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@login_required
 # View for the purchase report page
 def purchase_report(request):
-    try:
-        return render(request, 'transactions/purchase_report.html')
-    except Exception as e:
-        return HttpResponse(f"Error: {e}")
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    vendor_name = request.GET.get('vendor_name')
+
+    # Fetch all purchase records
+    purchases = Purchase.objects.all()
+
+    # Filter by date range if both `from_date` and `to_date` are provided
+    if from_date and to_date:
+        purchases = purchases.filter(order_date__range=[from_date, to_date])
+
+    # Filter by vendor name if provided
+    if vendor_name:
+        purchases = purchases.filter(vendor__name__icontains=vendor_name)
+
+    # Pass data to the template
+    context = {
+        'purchases': purchases,
+        'vendor_name': vendor_name,
+        'from_date': from_date,
+        'to_date': to_date,
+    }
+
+    return render(request, 'transactions/purchase_report.html', context)

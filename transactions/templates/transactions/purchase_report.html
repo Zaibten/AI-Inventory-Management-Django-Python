@@ -1,6 +1,172 @@
-{% extends "store/base.html" %}{% block title %}Purchase Report{% endblock %}
+{% extends "store/base.html" %}
+{% block title %}Purchase Report{% endblock %}
 {% block content %}
-<div class="container pt-5">
-    Purchase Report
+{% load static %}
+
+
+<style>
+    .btn-custom {
+        font-size: 15px;
+        border-radius: 24px; /* Rounded corners */
+        background-color: #1e7e34; /* Maintain the green background for success */
+        color: white; /* White text */
+        padding: 4px 10px; /* Padding for a balanced look */
+        transition: background-color 0.3s, transform 0.2s; /* Smooth transitions for hover effects */
+    }
+
+    .btn-custom:hover {
+        background-color: #11491e; /* Darker green on hover */
+        transform: scale(1.05); /* Slight zoom effect */
+        color: white; /* White text */
+    }
+
+    .btn-custom:active {
+        background-color: #1e7e34; /* Even darker green when active */
+        transform: scale(1); /* Reset zoom effect */
+    }
+</style>
+
+<!-- Header Section -->
+<div class="container my-4">
+    <div class="card shadow-sm rounded p-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h4 class="display-6 mb-0 text-success">Purchase Report</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end gap-2">
+                {% if purchases %}
+                <button class="btn btn-custom" onclick="printReport()"><i class="fas fa-file-pdf" style="font-size: 15px;"></i> Print PDF Report</button>
+                <button class="btn btn-custom" onclick="exportToExcel()"><i class="fa-solid fa-download" style="font-size: 15px;"></i> Export To Excel</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<div class="container pt-4">
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="vendor_name" class="form-label">Enter Vendor Name Here</label>
+            <input type="text" id="vendor_name" name="vendor_name" value="{{ vendor_name }}" class="form-control" 
+                   placeholder="Enter vendor name">
+        </div>
+        <div class="col-md-3">
+            <label for="from_date" class="form-label">From Date</label>
+            <input type="date" id="from_date" name="from_date" class="form-control" value="{{ from_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="to_date" class="form-label">To Date</label>
+            <input type="date" id="to_date" name="to_date" class="form-control" value="{{ to_date }}">
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+        </div>
+    </form>
+    
+    <!-- Purchase Table -->
+    {% if purchases %}
+    <div id="print-section" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+        <table class="table table-striped" id="sales-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item</th>
+                    <th>Vendor</th>
+                    <th>Order Date</th>
+                    <th>Delivery Date</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.id }}</td>
+                        <td>{{ purchase.item.name }}</td>
+                        <td>{{ purchase.vendor.name }}</td>
+                        <td>{{ purchase.order_date }}</td>
+                        <td>{{ purchase.delivery_date }}</td>
+                        <td>{{ purchase.quantity }}</td>
+                        <td>{{ purchase.get_delivery_status_display }}</td>
+                        <td>{{ purchase.total_value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No records found.</p>
+    {% endif %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+<script>
+    function printReport() {
+        const printContents = document.getElementById('print-section').outerHTML;
+        const originalContents = document.body.innerHTML;
+
+        // Get the current date and time
+        const currentDateTime = new Date().toLocaleString();
+
+        // Adding header, current date/time, and footer when printing the report
+        document.body.innerHTML = `
+            <!-- Header Section -->
+            <div style="text-align: center; padding-top: 30px; font-family: Arial, sans-serif;">
+                <img src="{% static 'images/logo/logo.png' %}" alt="Company Logo" 
+                     style="width: 150px; height: auto; border-radius: 50%; border: 3px solid #000;">
+                <h2 style="font-weight: bold; font-size: 28px; margin-top: 15px; color: #333;">AutoInven</h2>
+                <p style="font-size: 16px; color: #888;">Report generated on: ${currentDateTime}</p>
+            </div>
+
+            <!-- Content Section -->
+            <div style="padding: 40px; font-family: 'Helvetica Neue', sans-serif; line-height: 1.6;">
+                ${printContents}
+            </div>
+
+            <!-- Footer Section -->
+            <div style="text-align: center; margin-top: 40px; padding: 20px; background-color: #f7f7f7; border-top: 2px solid #ccc; font-family: Arial, sans-serif;">
+                <p style="font-weight: bold; font-size: 20px; margin-bottom: 10px; color: #333;">AutoInven</p>
+                <p style="font-size: 16px; color: #555;">Your Trusted Partner in Inventory Sales & Management</p>
+                <p style="font-size: 14px; color: #555;">Contact: +92 3363506933 | Address: DHA Phase II, Karachi</p>
+                <p style="font-size: 12px; color: #777;">&copy; 2025 AutoInven. All Rights Reserved.</p>
+            </div>
+        `;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+
+    function exportToExcel() {
+        const table = document.getElementById('sales-table');
+        const wb = XLSX.utils.table_to_book(table, {sheet: "Purchase Report"});
+        const wbout = XLSX.write(wb, {bookType: "xlsx", type: "binary"});
+        
+        // Create a Blob and trigger download
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xFF;
+            }
+            return buf;
+        }
+
+        const blob = new Blob([s2ab(wbout)], {type: "application/octet-stream"});
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "purchase_report.xlsx";
+        link.click();
+    }
+
+    function clearForm() {
+        // Clear the fields using their ID attributes
+        document.getElementById('vendor_name').value = '';
+        document.getElementById('from_date').value = '';
+        document.getElementById('to_date').value = '';
+    }
+</script>
+
 {% endblock content %}

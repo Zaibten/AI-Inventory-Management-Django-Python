@@ -1,9 +1,48 @@
 {% extends "store/base.html" %}
 {% block title %}Sale Report{% endblock %}
 {% block content %}
-
 {% load static %}
-<div class="container pt-5">
+<style>
+    .btn-custom {
+        font-size: 15px;
+        border-radius: 24px; /* Rounded corners */
+        background-color: #1e7e34; /* Maintain the green background for success */
+        color: white; /* White text */
+        padding: 4px 10px; /* Padding for a balanced look */
+        transition: background-color 0.3s, transform 0.2s; /* Smooth transitions for hover effects */
+    }
+
+    .btn-custom:hover {
+        background-color: #11491e; /* Darker green on hover */
+        transform: scale(1.05); /* Slight zoom effect */
+        color: white; /* White text */
+    }
+
+    .btn-custom:active {
+        background-color: #1e7e34; /* Even darker green when active */
+        transform: scale(1); /* Reset zoom effect */
+    }
+</style>
+
+<!-- Header Section -->
+<div class="container my-4">
+    <div class="card shadow-sm rounded p-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h4 class="display-6 mb-0 text-success">Sale Report</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end gap-2">
+                {% if sales %}
+                <button class="btn btn-custom" onclick="printReport()"><i class="fas fa-file-pdf" style="font-size: 15px;"></i> Print PDF Report</button>
+                <button class="btn btn-custom" onclick="exportToExcel()"><i class="fa-solid fa-download" style="font-size: 15px;"></i> Export To Excel</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container pt-4">
     <!-- The form itself, without header/footer -->
     <form method="get" class="row g-3 mb-4">
         <div class="col-md-4">
@@ -28,16 +67,6 @@
 
         </div>
     </form>
-    
-    <!-- Print Buttons in a Single Row with Reduced Gap -->
-    {% if sales %}
-    <div class="row mb-3">
-        <div class="col-md-11 pe-1 text-end">
-            <button class="btn btn-success" onclick="printReport()">Print PDF Report</button>
-            <button class="btn btn-success" onclick="exportToExcel()">Print Excel Report</button>
-        </div>
-    </div>
-    {% endif %}
     
     <!-- Sales Table -->
     {% if sales %}
