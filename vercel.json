@@ -5,7 +5,7 @@
             "src": "InventoryMS/wsgi.py",
             "use": "@vercel/python",
             "config": {
-                "maxLambdaSize": "15mb",
+                "maxLambdaSize": "45mb",
                 "runtime": "python3.10"
             }
         }
@@ -19,5 +19,13 @@
             "src": "/(.*)",
             "dest": "InventoryMS/wsgi.py"
         }
-    ]
+    ],
+    "functions": {
+        "excludeFiles": [
+            "tests/*",
+            "*.md",
+            "*.log",
+            "*.gz"
+        ]
+    }
 }
