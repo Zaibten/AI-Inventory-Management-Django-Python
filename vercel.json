@@ -19,13 +19,5 @@
             "src": "/(.*)",
             "dest": "InventoryMS/wsgi.py"
         }
-    ],
-    "functions": {
-        "excludeFiles": [
-            "tests/*",
-            "*.md",
-            "*.log",
-            "*.gz"
-        ]
-    }
+    ]
 }
